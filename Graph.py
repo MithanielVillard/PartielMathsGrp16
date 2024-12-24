@@ -3,8 +3,9 @@ from matplotlib.backend_bases import MouseButton
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 class Graph:
-    def __init__(self, plotframe):
+    def __init__(self, plotframe, pointPos):
 
+        self.point_pos = pointPos
         self.selected = None
 
         self.fig, self.ax = plt.subplots()
@@ -41,7 +42,14 @@ class Graph:
     def on_point_click(self, event):
         if self.selected is not None:
             self.selected.set(facecolor = "red")
+
+        data = event.artist.get_offsets().data.tolist()
+        x = str(data[0][0])[:4]
+        y = str(data[0][1])[:4]
+
         event.artist.set(facecolor = "yellow")
         self.selected = event.artist
+        self.point_pos.configure(text=f"({x}, {y})")
+
         self.update()
-        print(event.artist.get_offsets().data)
+        print(x, y)

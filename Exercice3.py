@@ -14,6 +14,10 @@ root.update()
 #-------------------------------------------
 settings = ctk.CTkFrame(master=root, fg_color="#576574")
 settings.grid(row=0, column=1, padx=(5, 10), pady=10, sticky="nsew")
+settings.grid_propagate(False)
+
+pos = ctk.CTkLabel(master=settings, text="", font=("Arial", 30))
+pos.grid(row=0, column=0, sticky="nsew", padx=20, pady=20)
 
 plotframe = ctk.CTkFrame(master=root, fg_color="#576574")
 plotframe.grid(row=0, column=0, padx=(10, 5), pady=10, sticky="nsew")
@@ -23,8 +27,9 @@ plotframe.rowconfigure(1, weight=2)
 toolbar = ctk.CTkFrame(master=plotframe, fg_color="#222f3e", height=50)
 toolbar.grid(row=0, column=0, padx=10, pady=(10, 5), sticky="ew")
 
-graph = Graph(plotframe)
+graph = Graph(plotframe, pos)
 graph.update()
 #----------------------------------------------
 
 root.mainloop()
+
