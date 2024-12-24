@@ -1,16 +1,24 @@
 import matplotlib.pyplot as plt
+from matplotlib.backend_bases import MouseButton
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-from matplotlib.patches import FancyBboxPatch
 
 class Graph:
     def __init__(self, plotframe):
+
+        self.selected = None
+
         self.fig, self.ax = plt.subplots()
 
         plt.connect('button_press_event', self.on_click)
+        plt.connect('pick_event', self.on_point_click)
 
         self.ax.set_title("Curve Generator", fontsize=20, pad=20, color="white")
         self.ax.set_xlabel("x")
         self.ax.set_ylabel("y")
+        self.ax.xaxis.label.set_color("white")
+        self.ax.yaxis.label.set_color("white")
+        self.ax.tick_params(axis='x', colors='white')
+        self.ax.tick_params(axis='y', colors='white')
         self.ax.set(xlim=(-1, 1), ylim=(-1, 1))
         self.fig.patch.set_facecolor("#222f3e")
         self.ax.grid(True)
@@ -24,7 +32,16 @@ class Graph:
 
     def on_click(self, event):
         if event.inaxes:
-            self.ax.scatter(event.xdata, event.ydata, color="r")
-            self.update()
-            print(f'data coords {event.xdata} {event.ydata},',
-                  f'pixel coords {event.x} {event.y}')
+            if event.button == MouseButton.RIGHT:
+                self.ax.scatter(event.xdata, event.ydata, color="r", picker=True, pickradius = 5)
+                self.update()
+                print(f'data coords {event.xdata} {event.ydata},',
+                      f'pixel coords {event.x} {event.y}')
+
+    def on_point_click(self, event):
+        if self.selected is not None:
+            self.selected.set(facecolor = "red")
+        event.artist.set(facecolor = "yellow")
+        self.selected = event.artist
+        self.update()
+        print(event.artist.get_offsets().data)
