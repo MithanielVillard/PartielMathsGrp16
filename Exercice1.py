@@ -18,4 +18,4 @@ def ellipse(xC : float, yC : float, a : float, b : float, step : int = 500):
     plt.axis('scaled')
     plt.show()
 
-ellipse(0, 0, 5, 3)
+ellipse(8, 5, 5, 3)

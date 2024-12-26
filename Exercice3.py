@@ -1,4 +1,6 @@
 import customtkinter as ctk
+from customtkinter import CTkFrame
+
 from Graph import Graph
 
 ctk.set_appearance_mode("dark")
@@ -16,8 +18,17 @@ settings = ctk.CTkFrame(master=root, fg_color="#576574")
 settings.grid(row=0, column=1, padx=(5, 10), pady=10, sticky="nsew")
 settings.grid_propagate(False)
 
-pos = ctk.CTkLabel(master=settings, text="", font=("Arial", 30))
-pos.grid(row=0, column=0, sticky="nsew", padx=20, pady=20)
+pos_text = ctk.CTkLabel(master=settings, text="", font=("Arial", 30))
+pos_text.grid(row=0, column=0, sticky="nsew", padx=20, pady=20)
+
+derivative_frame = CTkFrame(master=settings, fg_color="#576574")
+derivative_frame.grid(row=1, column=0 , sticky="nsew", padx=20, pady=10)
+
+derivative_text = ctk.CTkLabel(master=derivative_frame, text="f'(x) = ", font=("Arial", 25))
+derivative_text.grid(row=0, column=0, sticky="nsew")
+
+derivative_text_input = ctk.CTkEntry(master=derivative_frame, placeholder_text="0", font=("Arial", 25), width=90)
+derivative_text_input.grid(row=0, column=1, sticky="nsew")
 
 plotframe = ctk.CTkFrame(master=root, fg_color="#576574")
 plotframe.grid(row=0, column=0, padx=(10, 5), pady=10, sticky="nsew")
@@ -27,7 +38,7 @@ plotframe.rowconfigure(1, weight=2)
 toolbar = ctk.CTkFrame(master=plotframe, fg_color="#222f3e", height=50)
 toolbar.grid(row=0, column=0, padx=10, pady=(10, 5), sticky="ew")
 
-graph = Graph(plotframe, pos)
+graph = Graph(plotframe, pos_text, derivative_text_input)
 graph.update()
 #----------------------------------------------
 
