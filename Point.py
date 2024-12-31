@@ -2,7 +2,7 @@ class Point:
     def __init__(self, x, y, artist):
         self.x = x
         self.y = y
-        self.derivative = 1
+        self.derivative = 0
         self.artist = artist
 
     def set_color(self, color):

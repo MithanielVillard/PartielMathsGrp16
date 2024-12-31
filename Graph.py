@@ -116,7 +116,7 @@ class Graph:
 
         self.point_pos_text.configure(text=f"({x}, {y})")
 
-        self.derivative_input.delete(0)
+        self.derivative_input.delete(0, 100)
         self.derivative_input.insert(0, self.selected.derivative)
 
         self.update()
