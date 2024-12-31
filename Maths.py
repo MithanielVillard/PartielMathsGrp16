@@ -34,7 +34,10 @@ def hermite(point1 : tuple[float, float], point2 : tuple[float, float], prime1 :
     h3 = t**3 - 2*t**2 + t
     h4 = t**3 - t**2
 
-    return point1[1]*h1 + point2[1]*h2 + prime1*h3 + prime2*h4
+    return (point1[1] * h1
+            + point2[1] * h2
+            + prime1 * h3 * (point2[0] - point1[0])
+            + prime2 * h4 * (point2[0] - point1[0]))
 
 def d_forward(point1 : tuple[float, float], point2 : tuple[float, float]):
     return (point1[1]-point2[1])/(point1[0]-point2[0])
