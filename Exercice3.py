@@ -27,7 +27,7 @@ derivative_frame.grid(row=1, column=0 , sticky="nsew", padx=20, pady=10)
 derivative_text = ctk.CTkLabel(master=derivative_frame, text="f'(x) = ", font=("Arial", 25))
 derivative_text.grid(row=0, column=0, sticky="nsew")
 
-derivative_text_input = ctk.CTkEntry(master=derivative_frame, placeholder_text="0", font=("Arial", 25), width=90)
+derivative_text_input = ctk.CTkEntry(master=derivative_frame, placeholder_text="derive", font=("Arial", 25), width=90)
 derivative_text_input.grid(row=0, column=1, sticky="nsew")
 
 plotframe = ctk.CTkFrame(master=root, fg_color="#576574")

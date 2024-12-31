@@ -7,12 +7,11 @@ list_x = []
 list_y = []
 
 def segment(point1 : tuple[float, float], point2 : tuple[float, float], prime1 : float, prime2 : float):
-
     for i in range(0, 100):
 
         x = point1[0] * (1 - i/100) + point2[0] * i/100
 
-        plt.scatter(point1[0], point1[1], color='r', marker='o')
+        plt.scatter(point1[0], point1[1], color='r', marker='o', zorder=10)
         list_x.append(x)
         list_y.append(hermite(point1, point2, prime1, prime2, x))
 
