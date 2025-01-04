@@ -9,7 +9,7 @@ class Graph:
 
     def __init__(self, plotframe, point_pos_text, derivative_input):
 
-        #poits de controle (point rouge)
+        #points de controle (point rouge)
         self.points = []
         self.point_map = {}
         #tous les points qui composent la courbe (utile pour les difference finies)
@@ -18,6 +18,7 @@ class Graph:
         self.point_pos_text = point_pos_text
         self.derivative_input = derivative_input
         self.selected = None
+        self.mirror = False
 
         self.fig, self.ax = plt.subplots()
 
@@ -87,16 +88,17 @@ class Graph:
         if event.inaxes:
             if event.button == MouseButton.RIGHT:
 
-                artist = self.ax.scatter(event.xdata, event.ydata, color="r", s=10, picker=True, pickradius = 5, zorder=3)
-                #ajouter les points dans une liste
-                point = Point(event.xdata, event.ydata, artist)
-                self.points.append(point)
-                self.point_map[event.xdata] = point
+                self.place_point(event.xdata, event.ydata)
+
+                if self.mirror:
+                    self.place_point(50 - (event.xdata-50), event.ydata)
+
                 self.points.sort()
 
                 self.update()
                 print(f'data coords {event.xdata} {event.ydata},',
                       f'pixel coords {event.x} {event.y}')
+                
                 if len(self.points) >= 2:
                     self.draw_curve()
 
@@ -127,3 +129,13 @@ class Graph:
         print(self.selected.derivative)
         self.draw_curve()
         self.update()
+
+    def on_mirror_click(self):
+        self.mirror = not self.mirror
+
+    def place_point(self, x : float, y : float):
+        artist = self.ax.scatter(x, y, color="r", s=10, picker=True, pickradius=5, zorder=3)
+        # ajouter les points dans une liste
+        point = Point(x, y, artist)
+        self.points.append(point)
+        self.point_map[x] = point

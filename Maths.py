@@ -41,5 +41,18 @@ def hermite(point1 : tuple[float, float], point2 : tuple[float, float], prime1 :
             + prime1 * h3 * dx
             + prime2 * h4 * dx)
 
+def lagrange(points, x):
+    out = 0
+    for i in range(len(points)):
+
+        num = 1
+        den = 1
+        for j in range(len(points)):
+            if i != j:
+                num *= x - points[j][0]
+                den *= points[i][0] - points[j][0]
+        out += (num / den) * points[i][1]
+    return out
+
 def d_forward(point1 : tuple[float, float], point2 : tuple[float, float]):
     return (point1[1]-point2[1])/(point1[0]-point2[0])

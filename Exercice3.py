@@ -39,6 +39,10 @@ toolbar = ctk.CTkFrame(master=plotframe, fg_color="#222f3e", height=50)
 toolbar.grid(row=0, column=0, padx=10, pady=(10, 5), sticky="ew")
 
 graph = Graph(plotframe, pos_text, derivative_text_input)
+
+mirror_btn = ctk.CTkSwitch(master=toolbar, text="🪞", font=("Arial", 18), command=graph.on_mirror_click)
+mirror_btn.grid(row=0, column=0, padx=10, pady=10, sticky="ns")
+
 graph.update()
 #----------------------------------------------
 
