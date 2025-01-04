@@ -3,6 +3,7 @@ class Point:
         self.x = x
         self.y = y
         self.derivative = 0
+        self.derivative2 = 0
         self.artist = artist
 
     def set_color(self, color):

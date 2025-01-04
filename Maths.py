@@ -54,5 +54,14 @@ def lagrange(points, x):
         out += (num / den) * points[i][1]
     return out
 
-def d_forward(point1 : tuple[float, float], point2 : tuple[float, float]):
-    return (point1[1]-point2[1])/(point1[0]-point2[0])
+def d_forward(point : tuple[float, float], point_p1 : tuple[float, float]):
+    h = point_p1[0] - point[0]
+    return (point_p1[1]-point[1])/h
+
+
+def d_backward(point : tuple[float, float], point_m1 : tuple[float, float]):
+    h = point[0] - point_m1[0]
+    return (point[1] - point_m1[1])/h
+
+def derivative(derivative2 : float, h : float, fi_prime_p1: float):
+    return -(derivative2 * h - fi_prime_p1)

@@ -7,7 +7,7 @@ from Maths import *
 
 class Graph:
 
-    def __init__(self, plotframe, point_pos_text, derivative_input):
+    def __init__(self, plotframe, point_pos_text, derivative_input, derivative_second_input):
 
         #points de controle (point rouge)
         self.points = []
@@ -17,6 +17,7 @@ class Graph:
 
         self.point_pos_text = point_pos_text
         self.derivative_input = derivative_input
+        self.derivative_second_input = derivative_second_input
         self.selected = None
         self.mirror = False
 
@@ -25,6 +26,7 @@ class Graph:
         plt.connect('button_press_event', self.on_click)
         plt.connect('pick_event', self.on_point_click)
         derivative_input.bind('<Return>', self.on_derivative_input_changed)
+        derivative_second_input.bind('<Return>', self.on_derivative_input_second_changed)
 
         self.ax.set_title("Curve Generator", fontsize=20, pad=20, color="white")
         self.ax.set_xlabel("x")
@@ -49,8 +51,9 @@ class Graph:
     def segment(self, point1: Point, point2: Point, prime1: float, prime2: float):
         list_x = []
         list_y = []
-        for i in range(0, 100):
-            x = point1.x * (1 - i / 100) + point2.x * i / 100
+        step = 200
+        for i in range(0, step):
+            x = point1.x * (1 - i / step) + point2.x * i / step
             y = hermite((point1.x, point1.y), (point2.x, point2.y), prime1, prime2, x)
 
             list_x.append(x)
@@ -63,12 +66,15 @@ class Graph:
         for plot in self.ax.lines:
             plot.remove()
 
+        self.total_points.clear()
+
         #dessiner les tangentes
         for point in self.points:
             self.draw_tan(point, point.derivative)
 
         for point in range(len(self.points)-1):
             self.segment(self.points[point], self.points[point+1], self.points[point].derivative, self.points[point+1].derivative)
+
         self.update()
 
     def draw_tan(self, point : Point, prime : float):
@@ -121,12 +127,32 @@ class Graph:
         self.derivative_input.delete(0, 100)
         self.derivative_input.insert(0, self.selected.derivative)
 
+        self.derivative_second_input.delete(0, 100)
+        self.derivative_second_input.insert(0, self.selected.derivative2)
+
         self.update()
-        print(x, y)
 
     def on_derivative_input_changed(self, event):
         self.selected.derivative = float(self.derivative_input.get())
-        print(self.selected.derivative)
+        self.draw_curve()
+        self.update()
+
+    def on_derivative_input_second_changed(self, event):
+
+        current = (self.selected.x, self.selected.y)
+        current_p1 = self.total_points[self.total_points.index(current)+1]
+        current_p2 = self.total_points[self.total_points.index(current)+2]
+
+        h = current_p2[0] - current_p1[0]
+
+        prime = d_forward(current_p1, current_p2)
+        #print(current_p1, current_p2)
+        #print(prime)
+        d = derivative(float(self.derivative_second_input.get()), h, prime)
+
+        self.selected.derivative = d
+        self.derivative_input.delete(0, 100)
+        self.derivative_input.insert(0, d)
         self.draw_curve()
         self.update()
 

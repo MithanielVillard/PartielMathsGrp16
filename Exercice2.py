@@ -24,23 +24,25 @@ def segment_lagrange(points : list[tuple[float, float]]):
         list_x.append(x)
         list_y.append(lagrange(points, x))
 
-#segment composant la forme
-segment_lagrange([(1.9, -2), (3, -1), (4, 2)])
-segment((4, 2), (1, 5), -0.1, -3)
-segment((1, 5), (-2, 4), -0.5, 2.5)
-segment((-2, 4), (-5,2), 2, 0)
-segment((-5, 2), (-6.15, 1.5), -1, 3.5)
-segment_lagrange([(-6.15, 1.5), (-6, 1), (-5.5, 0.75), (-5.2, 0.85), (-5, 1)])
-segment_lagrange([(-5, 1), (-2, 3)])
-segment_lagrange([(-2, 3), (-1.3, 3.3), (-1.1, 3.3), (-0.9, 3.25)])
-segment((-0.9, 3.25), (-2, 2), 3, 0.2)
-segment_lagrange([(-2, 2), (-3, 1.4), (-3.4, 1), (-4, 0), (-4.5,-1.6)])
-segment((-4.5,-1.6), (-4, -3), -7, -1.3)
-segment((-4, -3), (0, -1), 1.35, -0.7)
-segment((0, -1), (1.9, -2), 0.5, -2.8)
 
+#segment composant la forme
+def Trace():
+    segment_lagrange([(1.9, -2), (3, -1), (4, 2)])
+    segment((4, 2), (1, 5), -0.1, -3)
+    segment((1, 5), (-2, 4), -0.5, 2.5)
+    segment((-2, 4), (-5,2), 2, 0)
+    segment((-5, 2), (-6.15, 1.5), -1, 3.5)
+    segment_lagrange([(-6.15, 1.5), (-6, 1), (-5.5, 0.75), (-5.2, 0.85), (-5, 1)])
+    segment_lagrange([(-5, 1), (-2, 3)])
+    segment_lagrange([(-2, 3), (-1.3, 3.3), (-1.1, 3.3), (-0.9, 3.25)])
+    segment((-0.9, 3.25), (-2, 2), 3, 0.2)
+    segment_lagrange([(-2, 2), (-3, 1.4), (-3.4, 1), (-4, 0), (-4.5,-1.6)])
+    segment((-4.5,-1.6), (-4, -3), -7, -1.3)
+    segment((-4, -3), (0, -1), 1.35, -0.7)
+    segment((0, -1), (1.9, -2), 0.5, -2.8)
 #--------------------------------------------------------
 
+Trace()
 
 plt.plot(list_x, list_y)
 plt.arrow(-7, 0, 15,0 , width=0.07, zorder=20, length_includes_head=True, color='black')
