@@ -16,7 +16,7 @@ def cos(x : float, order : int = 30):
 
 def sqrt(x):
     n = 1
-    for i in range(20):
+    for i in range(50):
         n = (n + x/n) * 0.5
     return n
 
@@ -57,7 +57,6 @@ def lagrange(points, x):
 def d_forward(point : tuple[float, float], point_p1 : tuple[float, float]):
     h = point_p1[0] - point[0]
     return (point_p1[1]-point[1])/h
-
 
 def d_backward(point : tuple[float, float], point_m1 : tuple[float, float]):
     h = point[0] - point_m1[0]

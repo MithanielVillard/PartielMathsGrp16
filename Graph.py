@@ -35,7 +35,7 @@ class Graph:
         self.ax.yaxis.label.set_color("white")
         self.ax.tick_params(axis='x', colors='white')
         self.ax.tick_params(axis='y', colors='white')
-        self.ax.set(xlim=(0, 100), ylim=(-10, 10))
+        self.ax.set(xlim=(-10, 10), ylim=(-10, 10))
         self.ax.locator_params(axis='x', nbins=20)
         self.ax.locator_params(axis='y', nbins=20)
         self.fig.patch.set_facecolor("#222f3e")
@@ -78,11 +78,9 @@ class Graph:
         self.update()
 
     def draw_tan(self, point : Point, prime : float):
-            l = 10
-            if prime == 0:
-                dx = l / 2
-            else:
-                dx = (l / 2) / (2 * (sqrt(1 + prime * prime))) #vecteur normalise de la tangente sqrt(1 + prime * prime) = norme
+            l = 2
+            magnitude = sqrt(1 + prime * prime)
+            dx = (l/2) / magnitude #vecteur normalise de la tangente sqrt(1 + prime * prime) = norme
             dy = prime * dx
 
             x = [point.x - dx, point.x + dx]

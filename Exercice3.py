@@ -61,4 +61,3 @@ mirror_btn.grid(row=0, column=0, padx=10, pady=10, sticky="ns")
 graph.update()
 
 root.mainloop()
-
