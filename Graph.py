@@ -90,9 +90,11 @@ class Graph:
 
     def draw_tan(self, point : Point, prime : float):
             l = 2
+
             magnitude = sqrt(1 + prime * prime)
-            dx = (l/2) / magnitude #vecteur normalise de la tangente sqrt(1 + prime * prime) = norme
-            dy = prime * dx
+            # vecteur normalise de la tangente sqrt(1 + prime * prime) = norme
+            dx = l / magnitude
+            dy = prime * l / magnitude
 
             x = [point.x - dx, point.x + dx]
             y = [point.y - dy, point.y + dy]
@@ -106,7 +108,8 @@ class Graph:
                 self.place_point(event.xdata, event.ydata)
 
                 if self.mirror:
-                    self.place_point(50 - (event.xdata-50), event.ydata)
+                    center = (float(self.limx_min.get()) + float(self.limx_max.get())) / 2
+                    self.place_point(center - (event.xdata-center), event.ydata)
 
                 self.points.sort()
 
@@ -187,7 +190,7 @@ class Graph:
         xlim = float(self.limx_min.get()), float(self.limx_max.get())
         ylim = float(self.limy_min.get()), float(self.limy_max.get())
         self.ax.set(xlim=xlim, ylim=ylim)
-        self.update()
+        self.draw_curve()
 
     def place_point(self, x : float, y : float):
         artist = self.ax.scatter(x, y, color="r", s=10, picker=True, pickradius=5, zorder=3)
