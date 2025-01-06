@@ -52,7 +52,7 @@ class Graph:
         list_x = []
         list_y = []
         step = 200
-        for i in range(0, step):
+        for i in range(0, step+1):
             x = point1.x * (1 - i / step) + point2.x * i / step
             y = hermite((point1.x, point1.y), (point2.x, point2.y), prime1, prime2, x)
 
@@ -138,14 +138,29 @@ class Graph:
     def on_derivative_input_second_changed(self, event):
 
         current = (self.selected.x, self.selected.y)
-        current_p1 = self.total_points[self.total_points.index(current)+1]
-        current_p2 = self.total_points[self.total_points.index(current)+2]
+        index = self.total_points.index(current)
 
-        h = current_p2[0] - current_p1[0]
+        prime = 0
+        h = 0
 
-        prime = d_forward(current_p1, current_p2)
-        #print(current_p1, current_p2)
-        #print(prime)
+        if index == 0:
+            current_p1 = self.total_points[index+1]
+            current_p2 = self.total_points[index+2]
+
+            h = current_p2[0] - current_p1[0]
+            prime = d_forward(current_p1, current_p2)
+        elif index == len(self.total_points)-1:
+            current_m1 = self.total_points[index-1]
+            current_m2 = self.total_points[index-2]
+
+            h = current_m1[0] - current_m2[0]
+            prime = d_backward(current_m1, current_m2)
+        else:
+            current_m1 = self.total_points[index-1]
+            current_p1 = self.total_points[index+1]
+            h = (current[0] - current_m1[0]) * 2
+            prime = d_center(current_m1, current_p1)
+
         d = derivative(float(self.derivative_second_input.get()), h, prime)
 
         self.selected.derivative = d
