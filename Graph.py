@@ -7,7 +7,8 @@ from Maths import *
 
 class Graph:
 
-    def __init__(self, plotframe, point_pos_text, derivative_input, derivative_second_input):
+    def __init__(self, plotframe, point_pos_text, derivative_input, derivative_second_input,
+                 limx_min, limx_max, limy_min, limy_max):
 
         #points de controle (point rouge)
         self.points = []
@@ -18,6 +19,12 @@ class Graph:
         self.point_pos_text = point_pos_text
         self.derivative_input = derivative_input
         self.derivative_second_input = derivative_second_input
+
+        self.limx_min = limx_min
+        self.limx_max = limx_max
+        self.limy_min = limy_min
+        self.limy_max = limy_max
+
         self.selected = None
         self.mirror = False
 
@@ -27,6 +34,10 @@ class Graph:
         plt.connect('pick_event', self.on_point_click)
         derivative_input.bind('<Return>', self.on_derivative_input_changed)
         derivative_second_input.bind('<Return>', self.on_derivative_input_second_changed)
+        limx_max.bind('<Return>', self.on_axes_input_change)
+        limy_min.bind('<Return>', self.on_axes_input_change)
+        limy_max.bind('<Return>', self.on_axes_input_change)
+        limx_min.bind('<Return>', self.on_axes_input_change)
 
         self.ax.set_title("Curve Generator", fontsize=20, pad=20, color="white")
         self.ax.set_xlabel("x")
@@ -171,6 +182,12 @@ class Graph:
 
     def on_mirror_click(self):
         self.mirror = not self.mirror
+
+    def on_axes_input_change(self, event):
+        xlim = float(self.limx_min.get()), float(self.limx_max.get())
+        ylim = float(self.limy_min.get()), float(self.limy_max.get())
+        self.ax.set(xlim=xlim, ylim=ylim)
+        self.update()
 
     def place_point(self, x : float, y : float):
         artist = self.ax.scatter(x, y, color="r", s=10, picker=True, pickradius=5, zorder=3)

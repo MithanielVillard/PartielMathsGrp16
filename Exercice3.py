@@ -51,12 +51,29 @@ plotframe.rowconfigure(1, weight=2)
 toolbar = ctk.CTkFrame(master=plotframe, fg_color="#222f3e", height=50)
 toolbar.grid(row=0, column=0, padx=10, pady=(10, 5), sticky="ew")
 
-graph = Graph(plotframe, pos_text, derivative_text_input, derivative_second_text_input)
-
 #Toolbar -------------------------------------------------
-mirror_btn = ctk.CTkSwitch(master=toolbar, text="🪞", font=("Arial", 18), command=graph.on_mirror_click)
-mirror_btn.grid(row=0, column=0, padx=10, pady=10, sticky="ns")
+
+x_input_min = ctk.CTkEntry(master=toolbar, placeholder_text="taille axe x", font=("Arial", 25), width=80)
+x_input_min.insert(0, "-10")
+x_input_min.grid(row=0, column=1, padx=(0,5), pady=10, sticky="ns")
+
+x_input_max = ctk.CTkEntry(master=toolbar, placeholder_text="taille axe x", font=("Arial", 25), width=80)
+x_input_max.insert(0, "10")
+x_input_max.grid(row=0, column=2, padx=(0,10), pady=10, sticky="ns")
+
+y_input_min = ctk.CTkEntry(master=toolbar, placeholder_text="taille axe y", font=("Arial", 25), width=80)
+y_input_min.insert(0, "-10")
+y_input_min.grid(row=0, column=3, padx=(10,0), pady=10, sticky="ns")
+
+y_input_max = ctk.CTkEntry(master=toolbar, placeholder_text="taille axe y", font=("Arial", 25), width=80)
+y_input_max.insert(0, "10")
+y_input_max.grid(row=0, column=4, padx=(5,5), pady=10, sticky="ns")
 #---------------------------------------------------------
+
+graph = Graph(plotframe, pos_text, derivative_text_input, derivative_second_text_input, x_input_min, x_input_max, y_input_min, y_input_max)
+
+mirror_btn = ctk.CTkSwitch(master=toolbar, text="🪞", font=("Arial", 18), command=graph.on_mirror_click)
+mirror_btn.grid(row=0, column=0, padx=(10, 5), pady=10, sticky="ns")
 
 graph.update()
 
